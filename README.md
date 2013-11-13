@@ -23,7 +23,7 @@
 $ npm install socket.io -g
 ```
 
-### 3. 安装 arale theme
+### 3. 安装 CMD theme
 
 Linux & Mac 用户一键安装：
 
