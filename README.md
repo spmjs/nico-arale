@@ -152,6 +152,6 @@ README.md
 
 ## 测试
 
-使用 spm test 命令就可以直接在命令行里运行用例。
+使用 [spm test](http://docs.spmjs.org/cli/test) 命令就可以直接在命令行里运行用例。`依赖 spm doc`
 
 当然也可以使用 spm doc watch 启动服务，然后访问 http://127.0.0.1:8000/tests/runner.html 用例页面进行测试。
