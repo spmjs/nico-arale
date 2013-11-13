@@ -2,7 +2,7 @@
 
 ---
 
-这是一个为 [aralejs.org](http://aralejs.org) 文档设计的 [nico](http://lab.lepture.com/nico/) 主题。
+这是一个为 [spmjs.org](http://spmjs.org) 文档设计的 [nico](http://lab.lepture.com/nico/) 主题。
 
 
 ## 安装
@@ -28,22 +28,20 @@ $ npm install socket.io -g
 Linux & Mac 用户一键安装：
 
 ```
-curl https://raw.github.com/aralejs/nico-arale/master/bootstrap.sh | sh
+curl https://raw.github.com/spmjs/nico-cmd/master/bootstrap.sh | sh
 ```
 
 Windows 用户安装：
 
-1.切换到.spm目录
+1.切换到`.spm`目录
 
 2.创建一个`themes`的目录并切换进入
 
-3.从git上拉一份arale的theme
+3.从 git 上拉一份 cmd 的 theme
 
-4.重命名`nico-arale`目录为`arale`
+4.重命名`nico-cmd`目录为`cmd`
 
-5.切换到`arale`目录，把里面的`make.bat`文件复制到一个全局PATH下（保证make命令可用即可）
-
-P.S. __注意千万别把`C:\Users\{{username}}\.spm\themes\arale`目录设置为全局PATH，这样`nico`命令会失效，切记！__
+P.S. __注意千万别把`C:\Users\{{username}}\.spm\themes\cmd`目录设置为全局PATH，这样`nico`命令会失效，切记！__
 
 ```
 cd C:\Users\{{username}}\.spm
@@ -51,36 +49,16 @@ cd C:\Users\{{username}}\.spm
 mkdir themes
 cd themes
 
-git clone https://github.com/aralejs/nico-arale.git
+git clone https://github.com/spmjs/nico-cmd.git
 
-rename nico-arale arale
+rename nico-cmd cmd
 
-cd arale
+cd cmd
 ```
 
 ## 使用说明
 
-复制一份 [Makefile](https://github.com/aralejs/nico-arale/blob/master/Makefile) 到你的项目下：
-
-Windows 用户可使用 [make.bat](https://github.com/aralejs/nico-arale/blob/master/make.bat)。
-
-
-- `make build-doc` 用于生成文档。
-- `make debug` 是开启本地服务器，可用来预览文档，并提供自动构建和 live reload 支持。(从本地 sea-modules 中加载依赖)
-- `make watch` 是开启本地服务器，可用来预览文档，并提供自动构建和 live reload 支持。 (从线上加载依赖)
-- `make server` 普通服务器，无自动刷新功能。
-- `make publish` 发布站点到 gh pages，你需要安装 ghp-import
-
-    ```
-    sudo easy_install -U ghp-import
-    ```
-
-Windows 用户注意，如果报错，说找不到 nico，请设置环境变量 `NODE_PATH`。
-请根据实际情况自行解决，一般来说应该设置为：
-
-```
-NODE_PATH = C:\Users\{{username}}\AppData\Roaming\npm\node_modules
-```
+使用 [spm-doc](https://github.com/spmjs/spm-doc) 来管理模块文档。
 
 ## 文档编辑
 
@@ -108,6 +86,10 @@ nico 还会用到模块根目录下的 package.json 文件，具体项的含义�
     }
     ````
 
+    ````html
+    <div class="content"></div>
+    ````
+
 插入 iframe
 
     ````iframe
@@ -131,11 +113,10 @@ nico 还会用到模块根目录下的 package.json 文件，具体项的含义�
 
 ## 输出
 
-假设模块的目录结构为：
+假设模块的目录结构为（以下结构可以用 [spm init 插件](https://github.com/spmjs/spm-init) 来生成）：
 
 ```
 package.json
-Makefile
 src/
     hello-world.js
 examples/
@@ -145,11 +126,10 @@ docs/
 README.md
 ```
 
-执行 `make build-doc` 后会生成：
+执行 `spm doc build` 后会生成：
 
 ```
 package.json
-Makefile
 _site/
     index.html
     src/
@@ -171,3 +151,7 @@ README.md
 
 
 ## 测试
+
+使用 spm test 命令就可以直接在命令行里运行用例。
+
+当然也可以使用 spm doc watch 启动服务，然后访问 http://127.0.0.1:8000/tests/runner.html 用例页面进行测试。
