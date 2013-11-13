@@ -18,7 +18,7 @@
     {%- endblock %}
     {%- block afterstyle %}{% endblock %}
   </head>
-  <body>
+  <body class="{%- if config.isCssModule %}alice{%- endif %}">
     <div id="body-wrapper">
       {%- block body %}
       <aside id="sidebar-wrapper">

@@ -24,7 +24,7 @@ module.exports = function(nico) {
   }
   nico.MochaWriter = MochaWriter;
 
-  exports.name = 'arale';
+  exports.name = 'cmd';
   exports.version = '1.0';
   exports.lang = 'zh';
 
