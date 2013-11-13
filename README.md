@@ -1,8 +1,8 @@
-# Theme for Arale Documentation
+# Theme for CMD modules Documentation
 
 ---
 
-这是一个为 [spmjs.org](http://spmjs.org) 文档设计的 [nico](http://lab.lepture.com/nico/) 主题。
+这是一个为 [spmjs.org](http://spmjs.org) 中模块的静态文档设计的 [nico](http://lab.lepture.com/nico/) 主题。
 
 
 ## 安装
