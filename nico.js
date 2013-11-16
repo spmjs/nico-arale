@@ -6,7 +6,11 @@ exports.theme = __dirname
 exports.source = process.cwd()
 exports.output = path.join(process.cwd(), '_site')
 exports.permalink = '{{directory}}/{{filename}}.html'
-exports.google = 'UA-36247332-1'
+if (pkg.family === 'arale') {
+  exports.google = 'UA-36247332-1'
+} else if (pkg.family === 'alice') {
+  exports.google = 'UA-39169474-1'
+}
 exports.ignorefilter = function(filepath, subdir) {
   if (/^(_site|_theme|node_modules|\.idea)/.test(subdir)) {
     return false;
