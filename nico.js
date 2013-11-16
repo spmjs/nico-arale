@@ -1,5 +1,6 @@
 var path = require('path');
-
+var pkg = require(path.join(process.cwd(), 'package.json'))
+exports.package = pkg;
 
 // {{ settings for nico
 exports.theme = __dirname
@@ -27,9 +28,6 @@ exports.writers = [
 
 // extends for theme usage, that can be accessable by {{config.xxx}}
 exports.assets_host = 'http://assets.spmjs.org';
-
-var pkg = require(path.join(process.cwd(), 'package.json'))
-exports.package = pkg;
 
 exports.filters = {
   fixlink: function(html) {
