@@ -33,6 +33,7 @@ body {
     background-color: #F2F0E9;
     background-image: url(gray_jean.png);
     text-rendering: optimizelegibility;
+    font-family: Georgia,'Xin Gothic','PT Sans','Hiragino Sans GB','Helvetica Neue',Helvetica,Arial,sans-serif;
 }
 a {
     color: #55A4F2;
@@ -131,13 +132,13 @@ pre, code, tt {
     color: rgba(0, 0, 0, 0.2);
 }
 #sidebar-wrapper .package-root a:hover {
-    color: rgba(0, 0, 0, 0.33);    
+    color: rgba(0, 0, 0, 0.33);
 }
 #navigation {
     list-style-type: none;
     font-size: 14px;
     border-top: 1px dashed #D6D4CD;
-    border-bottom: 1px dashed #D6D4CD;    
+    border-bottom: 1px dashed #D6D4CD;
     margin: 20px 0 0 0;
     padding: 10px 0;
     zoom: 1;
@@ -188,13 +189,6 @@ pre, code, tt {
     color: #BCBCBD;
     font-size: 12px;
     margin: 12px 0;
-}
-#content p, #content h1, #content h2, #content h3, #content h4 {
-    font-family: Georgia,'Xin Gothic','PT Sans','Hiragino Sans GB','Helvetica Neue',Helvetica,Arial,sans-serif;
-    color: #555;
-}
-#content p, #content ul, #content ol {
-    color: #666;
 }
 #content h2 {
     margin-top: 40px;
