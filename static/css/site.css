@@ -348,16 +348,17 @@ pre, code, tt {
 #module-output li {
     list-style: none;
     float: left;
-    margin: 0 1px 0 0;
+    margin: 0 1px 3px 0;
     line-height: 1;
 }
 #module-output a {
-    font-size: 14px;
-    line-height: 1;
-    color: rgba(0, 0, 0, 0.2);
+    font-size: 24px;
+    font-family: arial;
+    line-height: 10px;
+    color: #ccc!important;
 }
 #module-output a:hover {
-    color: rgba(0, 0, 0, 0.35);
+    color: #aaa!important;
 }
 #output-card {
     background: #fff;
@@ -371,7 +372,7 @@ pre, code, tt {
 #output-card h3,
 #output-card p {
     margin: 0;
-    font-size: 12px;    
+    font-size: 12px;
 }
 #output-card h3 {
     margin-bottom: 3px;
@@ -541,7 +542,7 @@ pre, code, tt {
 }
 
 .alice #module-output li.module-multiable {
-    background: none repeat scroll 0 0 #88C438;
+    background: #88C438;
     border-radius: 1px;
     color: #FFFFFF;
     font-size: 10px;
