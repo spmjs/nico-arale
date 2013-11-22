@@ -33,7 +33,7 @@ body {
     background-color: #F2F0E9;
     background-image: url(gray_jean.png);
     text-rendering: optimizelegibility;
-    font-family: Georgia,'Xin Gothic','PT Sans','Hiragino Sans GB','Helvetica Neue',Helvetica,Arial,sans-serif;
+    font-family: "Marmelad","Lucida Grande",'Hiragino Sans GB',Georgia,sans-serif;
 }
 a {
     color: #55A4F2;
