@@ -126,6 +126,19 @@ module.exports = function(nico) {
         content = content.replace(reg, '$1<a href="#$2" class="anchor">¶</a>$3');
       }
       return content;
+    },
+
+    gitRepoUrl: function(url) {
+      url = url.replace(/\.git$/, '');
+      if (url.match(/^http/)) {
+        return url;
+      }
+      var matcher = url.match(/^git@(.*)\:(.*)/);
+      if (matcher) {
+        return 'http://' + matcher[1] + '/' + matcher[2];
+      } else {
+        return url;
+      }
     }
   };
 

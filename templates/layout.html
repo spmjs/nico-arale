@@ -29,7 +29,7 @@
         <p class="description">{{config.package.description}}</p>
         <p class="keywords" style="display: none;">{{config.package.keywords[0]}}</p>
         {%- if config.package.repository %}
-        <a class="source" href="{{config.package.repository.url}}" target="_blank">View the Project</a>
+        <a class="source" href="{{config.package.repository.url|gitRepoUrl}}" target="_blank">View the Project</a>
         {%- endif %}
         {%- block sidebar %}
         <ul id="navigation" role="navigation">
