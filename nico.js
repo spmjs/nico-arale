@@ -41,9 +41,13 @@ exports.filters = {
     return html;
   },
   getNickName: function(html) {
-    var reg = /^(.*) (.*)$/;
-    var m = html.match(reg);
-    return m ? m[1] : '';
+    if (typeof html === 'string') {
+      var reg = /^(.*) (.*)$/;
+      var m = html.match(reg);
+      return m ? m[1] : '';
+    } else if (html.name) {
+      return html.name;
+    }
   }
 }
 
