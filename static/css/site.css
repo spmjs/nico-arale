@@ -179,7 +179,7 @@ pre, code, tt {
     border-bottom: 1px solid #ccc;
     font-family: "Marmelad", sans-serif;
 }
-#content hr {
+hr {
     display: block;
     border: 0;
     height: 4px;
