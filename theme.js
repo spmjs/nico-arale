@@ -139,6 +139,25 @@ module.exports = function(nico) {
       } else {
         return url;
       }
+    },
+    fixlink: function(html) {
+      // format permalink, ends without .html
+      html = html.replace(/(href="[^"]+)\.md(">)/ig, "$1.html$2");
+      return html;
+    },
+    fixIssues: function(html) {
+      // format permalink, ends without .html
+      html = html.replace(/\s#([0-9]+)/ig, '<a href="'+pkg.bugs.url+'/$1">#$1</a>');
+      return html;
+    },
+    getNickName: function(html) {
+      if (typeof html === 'string') {
+        var reg = /^(.*) (.*)$/;
+        var m = html.match(reg);
+        return m ? m[1] : '';
+      } else if (html.name) {
+        return html.name;
+      }
     }
   };
 
