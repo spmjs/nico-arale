@@ -8,6 +8,8 @@ module.exports = function(nico) {
   var fs = require('fs');
   var util = require('util');
 
+  var SEA_MODULES = 'sea-modules';
+
   var file = nico.sdk.file;
   var BaseWriter = nico.BaseWriter;
 
@@ -64,20 +66,13 @@ module.exports = function(nico) {
     },
     find_category: findCategory,
     replace_code: function(content) {
-      var srcdir = path.join(process.cwd(), 'src');
-      if (!file.exists(srcdir)) {
-        return content;
-      }
-      var key, value, regex;
-      var p = pkg;
-      fs.readdirSync(srcdir).forEach(function(key) {
-        key = key.replace(/\.js$/, '');
-        value = util.format('%s/%s/%s/%s', p.family, p.name, p.version, key);
-        var regex = new RegExp(
-          '<span class="string">(\'|\")' + key + '(\'|\")</span>', 'g'
-        );
-        content = content.replace(regex, '<span class="string">$1' + value + '$2</span>');
-      });
+      var main = pkg.spm.main;
+      main = main.replace(/\.js$/, '');
+      value = util.format('%s/%s/%s', pkg.name, pkg.version, main.slice(main.lastIndexOf('/') + 1));
+      var regex = new RegExp(
+        '<span class="string">(\'|\")' + (main || 'index') + '(\'|\")</span>', 'g'
+      );
+      content = content.replace(regex, '<span class="string">$1' + value + '$2</span>');
       return content;
     },
     clean_alias: function(alias) {
@@ -162,52 +157,6 @@ module.exports = function(nico) {
   };
 
   exports.functions = {
-    dist_files: function() {
-      var distdir = path.join(process.cwd(), 'dist');
-      var ret = {
-        js: [],
-        css: []
-      };
-      if (!file.exists(distdir)) {
-        return ret;
-      }
-      file.recurse(distdir, function(fpath) {
-        var fname = path.relative(distdir, fpath).replace(/\\/g, '/');
-        if (fname.indexOf('-debug') !== -1) return;
-        if (/\.js$/.test(fname)) {
-          ret.js.push(fname);
-        } else if (/\.css$/.test(fname)) {
-          ret.css.push(fname);
-        }
-      });
-      return ret;
-    },
-
-    src_files: function() {
-      var srcdir = path.join(process.cwd(), 'src');
-      var ret = {
-        js: [],
-        css: [],
-        alias: {}
-      };
-      if (!file.exists(srcdir)) {
-        return ret;
-      }
-      file.recurse(srcdir, function(fpath) {
-        var fname = path.relative(srcdir, fpath).replace(/\\/g, '/');
-        var key;
-        if (/\.js$/.test(fname)) {
-          ret.js.push(fname);
-          key = fname.replace(/\.js$/, '');
-          ret.alias[key] = fname;
-        } else if (/\.css$/.test(fname)) {
-          ret.css.push(fname);
-          key = fname;
-          ret.alias[key] = fname;
-        }
-      });
-      return ret;
-    },
 
     spec_files: function() {
       var specdir = path.join(process.cwd(), 'tests');
@@ -224,17 +173,29 @@ module.exports = function(nico) {
       return ret;
     },
 
+    dependencies: function() {
+      var ret = {};
+      if (pkg.spm) {
+        var dependencies = pkg.spm.dependencies || {};
+        var devDependencies = pkg.spm.devDependencies || {};
+        Object.keys(dependencies).forEach(function(key) {
+          var alias = findEntryPoint(SEA_MODULES + '/' + key + '/' + dependencies[key]);
+          ret[key] = alias;
+        });
+        Object.keys(devDependencies).forEach(function(key) {
+          var alias = findEntryPoint(SEA_MODULES + '/' + key + '/' + devDependencies[key]);
+          ret[key] = alias;
+        });
+      }
+      return ret;
+    },
+
     engines: function() {
       var ret = [];
       if (pkg.spm && pkg.spm.engines) {
         var engines = pkg.spm.engines;
         Object.keys(engines).forEach(function(key) {
-          var js = engines[key];
-          if (/\.js$/.test(js)) {
-            ret.push(js);
-          } else {
-            ret.push(js + '.js');
-          }
+          ret.push(findEntryPoint(SEA_MODULES + '/' + key + '/' + engines[key]));
         });
       }
       return ret;
@@ -244,6 +205,14 @@ module.exports = function(nico) {
   exports.hasHistory = file.exists(path.join(process.cwd(), 'HISTORY.md'));
   exports.hasTest = file.exists(path.join(process.cwd(), 'tests'));
 
+  exports.isCssModule = (function() {
+    var main = pkg.spm && pkg.spm.main
+    if (main) {
+      if (/\.(css|stylus|less)$/.test(main)) return true
+      else return false
+    }
+    return false
+  })()
 
   function findSrc(base) {
     if (base === undefined) {
@@ -287,6 +256,15 @@ module.exports = function(nico) {
       return parseInt(a, 10) - parseInt(b, 10);
     });
     return ret;
+  }
+
+  function findEntryPoint(filePath) {
+    var pkgFile = path.join(process.cwd(), filePath + '/package.json');
+    var pkg = JSON.parse(fs.readFileSync(pkgFile));
+    if (pkg && pkg.spm && pkg.spm.main) {
+      return filePath + '/' +  pkg.spm.main;
+    }
+    return filePath + '/index.js';
   }
 
   return exports;
