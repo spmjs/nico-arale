@@ -9,10 +9,17 @@
 {%- set deps = dependencies %}
 
 <script>
-(function() {
+  (function() {
+
+  var query = location.search.substring(1).split('&');
+  var coverage;
+
+  if (contain(query, 'cov')) {
+    coverage = true;
+  }
 
   seajs.config({
-    base: "/",
+    base: "{{content_url('')}}",
     alias: {
       "$": 'jquery/jquery/1.7.2/jquery',
       "$-debug": 'jquery/jquery/1.7.2/jquery-debug',
@@ -22,7 +29,25 @@
     }
   });
 
-  seajs.config({ alias: {{deps|clean_alias|json_encode}}});
+  seajs.config({
+    alias: {{deps|clean_alias|json_encode}},
+    map: [function(uri) {
+      if (!coverage) {
+        return uri;
+      } else {
+        return uri.replace(/\.js$/, '-cov.js');
+      }
+    }]
+  });
+
+  function contain(arr, value) {
+    for (var i in arr) {
+      if (arr[i] === value) {
+        return true;
+      }
+    }
+    return false;
+  }
 
 })();
 </script>

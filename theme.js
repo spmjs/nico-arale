@@ -50,15 +50,6 @@ module.exports = function(nico) {
   var pkg = require(path.join(process.cwd(), 'package.json'))
 
   exports.filters = {
-    debug: function(args) {
-      return args.indexOf('debug') != -1;
-    },
-    debug_file: function(val) {
-      if (/\-debug\.(js|css)$/.test(val)) {
-        return val;
-      }
-      return val.replace(/\.(js|css)$/, '-debug.$1');
-    },
     find: function(pages, cat) {
       var ret = findCategory(pages, cat);
       if (ret.length) return ret[0];
@@ -83,18 +74,6 @@ module.exports = function(nico) {
       });
       return alias;
     },
-    css_alias: function(alias) {
-      return Object.keys(alias || {}).map(function(key) {
-        return alias[key];
-      }).filter(function(val) {
-        return /\.css$/.test(val);
-      });
-    },
-    render_src: function(writer) {
-      var base = path.relative(path.dirname(writer.filepath), '');
-      var ret = findSrc(base);
-      return JSON.stringify(ret);
-    },
     is_runtime_handlebars: function(pkg) {
       var src = findSrc();
       for (var key in src) {
@@ -114,7 +93,6 @@ module.exports = function(nico) {
       }
       return false;
     },
-
     add_anchor: function(content) {
       for (var i = 1; i <= 6; i++) {
         var reg = new RegExp('(<h' + i + '\\sid="(.*?)">.*?)(<\/h' + i + '>)', 'g');
@@ -122,7 +100,6 @@ module.exports = function(nico) {
       }
       return content;
     },
-
     gitRepoUrl: function(url) {
       url = url.replace(/\.git$/, '');
       if (url.match(/^http/)) {
@@ -213,28 +190,6 @@ module.exports = function(nico) {
     }
     return false
   })()
-
-  function findSrc(base) {
-    if (base === undefined) {
-      base = '..';
-    }
-    if (base === '') {
-      base = '.';
-    }
-    var ret = {};
-
-    var srcdir = path.join(process.cwd(), 'src');
-    if (!file.exists(srcdir)) {
-      return ret;
-    }
-    nico.sdk.file.recurse(srcdir, function(filepath) {
-      var filename = path.relative(srcdir, filepath);
-      var key = path.basename(filename);
-      key = key.replace(/\.js$/, '');
-      ret[key] = base + '/src/' + filename;
-    });
-    return ret;
-  }
 
   function findCategory(pages, cat) {
     var ret = [];
