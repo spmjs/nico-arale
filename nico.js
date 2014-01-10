@@ -22,8 +22,6 @@ exports.writers = [
 ]
 // end settings }}
 
-exports.assets_host = 'http://assets.spmjs.org';
-
 exports.middlewares = [
   {
     name: 'CMD wrapper',
@@ -40,7 +38,7 @@ exports.middlewares = [
 
           // wrap CommonJS file to CMD
           if (!/define\s*\(function\s*\(\s*require/.test(data) &&
-            req.url.indexOf('seajs') < 0) {
+            req.url.indexOf('?nowrap') < 0) {
             data = 'define(function(require, exports, module) {\n' + data;
             data = '/* Wrap by nico-cmd */\n' + data;
             data += '\n});'

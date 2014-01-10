@@ -8,11 +8,7 @@
   </head>
   <body>
     {%- include "snippet/head.html" %}
-    <script src="{{config.assets_host}}/gallery/mocha/1.9.0/mocha.js"></script>
-    <script src="{{config.assets_host}}/gallery/sinon/1.6.0/sinon.js"></script>
-    <!--[if lte IE 8]>
-    <script src="{{config.assets_host}}/gallery/sinon/1.6.0/sinon-ie.js"></script>
-    <![endif]--> 
+    <script src="{{static_url('js/mocha.js')}}?nowrap"></script>
     <div id="mocha"></div>
     <script>
       (function() {

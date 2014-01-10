@@ -21,18 +21,6 @@
 </ol>
 {%- endif %}
 
-{%- set output = config.package.spm.output %}
-<ul id="module-output">
-  <li class="module-multiable" title="本组件共有{{output|length}}个子模块">文件</li>
-    {%- for value in output %}
-    <li><a data-file="{{value}}" target="_blank" href="http://assets.spmjs.org/{{config.package.family}}/{{config.package.name}}/{{config.package.version}}/{{value}}">■</a></li>
-    {%- endfor %}
-</ul>
-<div id="output-card">
-    <h3>{{config.package.family}}/{{config.package.name}}/{{config.package.version}}/<a target="_blank" id="output-file"></a></h3>
-    <p>这是本模块的输出文件，请复制以上 ID 进行使用。</p>
-</div>
-
 {%- if config.package.family == 'arale' || config.package.family == 'alice' || config.package.family == 'alipay' %}
 {%- if config.package.maintainers|length > 0 %}
 <div id="maintainers">

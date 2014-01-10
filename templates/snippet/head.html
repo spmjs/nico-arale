@@ -2,7 +2,7 @@
 
 {%- if engines|length %}
 {%- for file in engines %}
-<script src="{{content_url('')}}{{file}}"></script>
+<script src="{{content_url('')}}{{file}}?nowrap"></script>
 {%- endfor %}
 {%- endif %}
 
@@ -13,10 +13,6 @@
 
   var query = location.search.substring(1).split('&');
   var coverage;
-
-  if (contain(query, 'cov')) {
-    coverage = true;
-  }
 
   seajs.config({
     base: "{{content_url('')}}",
@@ -30,14 +26,7 @@
   });
 
   seajs.config({
-    alias: {{deps|clean_alias|json_encode}},
-    map: [function(uri) {
-      if (!coverage) {
-        return uri;
-      } else {
-        return uri.replace(/\.js$/, '-cov.js');
-      }
-    }]
+    alias: {{deps|clean_alias|json_encode}}
   });
 
   function contain(arr, value) {
