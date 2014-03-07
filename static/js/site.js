@@ -32,7 +32,7 @@ seajs.use(['$'], function($) {
 
 });
 
-seajs.use(['$', 'arale/popup/1.1.5/popup', 'gallery/underscore/1.4.4/underscore'], function($, Popup, _) {
+seajs.use(['$', 'arale/popup/1.1.6/popup', 'gallery/underscore/1.5.2/underscore'], function($, Popup, _) {
 
   if ($('#sidebar-wrapper').length === 0) {
     return;
@@ -77,15 +77,19 @@ seajs.use(['$', 'arale/popup/1.1.5/popup', 'gallery/underscore/1.4.4/underscore'
   // version document link
   var versionJsonLink,
     versionDocLink, lastestLink;
-  if (family === 'arale') {
-    versionJsonLink = 'https://spmjs.org/repository/' + family + '/' + name + '/?define';
-    versionDocLink = 'http://aralejs.org/+/' + name + '/';
-    lastestLink = 'http://aralejs.org/' + name + '/';
-  } else {
+  // for alipay inside develop
+  if (location.href.indexOf('alipay.im') >= 0) {
+    spmLink =  'http://yuan.alipay.im/'+family+'/'+name+'/'+version;
     versionJsonLink = 'http://yuan.alipay.im/repository/'+family+'/'+name+'/?define';
-    versionDocLink = 'http://arale.alipay.im/+/' + family +'/' + name + '/';
-    lastestLink = 'http://arale.alipay.im/' + family +'/' + name + '/';
+    versionDocLink = '/+/' + family +'/' + name + '/';
+    lastestLink = '/' + family +'/' + name + '/';
+  } else {
+    spmLink =  'https://spmjs.org/'+family+'/'+name+'/'+version;
+    versionJsonLink = 'https://spmjs.org/repository/' + family + '/' + name + '/?define';
+    versionDocLink = '/+/' + name + '/';
+    lastestLink = '/+/' + name + '/';
   }
+  $('.version a').attr('href', spmLink);
 
   seajs.use(versionJsonLink, function(package) {
     if (!(package && package.packages)) return;
@@ -93,7 +97,7 @@ seajs.use(['$', 'arale/popup/1.1.5/popup', 'gallery/underscore/1.4.4/underscore'
     var versions = _.keys(package.packages);
     versions = _.without(versions, version);
 
-    if (versions.length > 0) { 
+    if (versions.length > 0) {
       var template = '<ul class="other-versions">';
       template += '<li class="other-versions-title"><a href="'+lastestLink+'">最新版本</a></li>';
       for (var i=0; i<versions.length; i++) {
@@ -105,7 +109,7 @@ seajs.use(['$', 'arale/popup/1.1.5/popup', 'gallery/underscore/1.4.4/underscore'
       new Popup({
         trigger: '.version a',
         template: template,
-        effect: 'fade',      
+        effect: 'fade',
         align: {
           baseXY: [0, '100%']
         }
@@ -114,7 +118,7 @@ seajs.use(['$', 'arale/popup/1.1.5/popup', 'gallery/underscore/1.4.4/underscore'
   });
 
   // google analytics
-  var project = $('#sidebar-wrapper h1 > a').text();  
+  var project = $('#sidebar-wrapper h1 > a').text();
   $('#footer-wrapper a').click(function() {
     _gaq.push(['_trackEvent', 'Link', 'Footer', $(this).text()]);
   });
