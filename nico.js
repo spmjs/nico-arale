@@ -13,6 +13,17 @@ if (pkg.family === 'arale') {
   exports.google = 'UA-39169474-1'
 }
 exports.ignorefilter = function(filepath, subdir) {
+  var extname = path.extname(filepath);
+  if (extname === '.tmp' || extname === '.bak') {
+    return false;
+  }
+  if (/\.DS_Store/.test(filepath)) {
+    return false;
+  }
+  if (/^sea-modules/.test(subdir) &&
+      /\.[md|html|psd|zip|yml]/.test(path.extname(filepath))) {
+    return false;
+  }
   if (/^(_site|_theme|node_modules|\.idea)/.test(subdir)) {
     return false;
   }
