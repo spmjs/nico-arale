@@ -152,7 +152,7 @@ jquery/jquery/1.7.2/jquery.js"></script>
     {%- endfor %}
     for (var i=0; i<cssArray.length; i++) {
       if (cssArray[i].indexOf('.css') < 0) {
-        cssArray.splice(i, 1);
+        cssArray[i] = '';
       }
     }
     seajs.use(cssArray);
